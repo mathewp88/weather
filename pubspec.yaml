@@ -39,6 +39,10 @@ dependencies:
   http: ^0.13.4
   font_awesome_flutter: ^9.2.0
   weather_icons: ^3.0.0
+  string_extensions: ^0.4.0
+  daylight: ^2.0.0
+
+
 
 
 

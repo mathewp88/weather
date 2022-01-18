@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:weather/util/weatherdata.dart';
+import 'package:string_extensions/string_extensions.dart';
 
 class HomeScreen extends StatefulWidget {
   HomeScreen({Key? key, required this.weatherData}) : super(key: key);
@@ -15,6 +16,7 @@ class _HomeScreenState extends State<HomeScreen> {
   late int ftemperature;
   late int humidity;
   late String location;
+  late String cond;
   late Icon weatherDisplayIcon;
 
   void updateDisplayInfo(WeatherData weatherData) {
@@ -22,6 +24,7 @@ class _HomeScreenState extends State<HomeScreen> {
       temperature = weatherData.currentTemperature.round();
       ftemperature = weatherData.currentFTemperature.round();
       location = weatherData.location;
+      cond = weatherData.cond;
       humidity = weatherData.humidity;
       WeatherDisplayData weatherDisplayData =
           weatherData.getWeatherDisplayData();
@@ -55,56 +58,26 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
       body: Container(
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
+            SizedBox(
+              height: 80,
+            ),
             Container(
               child: weatherDisplayIcon,
             ),
             SizedBox(
-              height: 40,
+              height: 60,
             ),
             Center(
               child: Text(
                 ' $temperature°',
                 style: TextStyle(
                   color: Colors.white,
-                  fontSize: 80.0,
+                  fontSize: 75.0,
                   fontWeight: FontWeight.w300,
                   letterSpacing: -5,
-                ),
-              ),
-            ),
-            Center(
-              child: Text(
-                ' $ftemperature°',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 40.0,
-                  fontWeight: FontWeight.w300,
-                  letterSpacing: -1,
-                ),
-              ),
-            ),
-            Center(
-              child: Text(
-                'Feels Like $ftemperature°',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 40.0,
-                  fontWeight: FontWeight.w300,
-                  letterSpacing: -1,
-                ),
-              ),
-            ),
-            Center(
-              child: Text(
-                'Humidity $humidity%',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 40.0,
-                  fontWeight: FontWeight.w300,
-                  letterSpacing: -1,
                 ),
               ),
             ),
@@ -113,10 +86,52 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
             Center(
               child: Text(
+                cond.toTitleCase!,
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 30.0,
+                  fontWeight: FontWeight.w300,
+                  letterSpacing: -1,
+                ),
+              ),
+            ),
+            SizedBox(
+              height: 5,
+            ),
+            Center(
+              child: Text(
+                'Feels Like $ftemperature°',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 30.0,
+                  fontWeight: FontWeight.w300,
+                  letterSpacing: -1,
+                ),
+              ),
+            ),
+            SizedBox(
+              height: 5,
+            ),
+            Center(
+              child: Text(
+                'Humidity $humidity%',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 30.0,
+                  fontWeight: FontWeight.w300,
+                  letterSpacing: -1,
+                ),
+              ),
+            ),
+            SizedBox(
+              height: 5,
+            ),
+            Center(
+              child: Text(
                 'City : $location',
                 style: TextStyle(
                   color: Colors.white,
-                  fontSize: 20.0,
+                  fontSize: 30.0,
                   fontWeight: FontWeight.w300,
                   letterSpacing: -1,
                 ),
