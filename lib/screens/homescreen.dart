@@ -18,6 +18,8 @@ class _HomeScreenState extends State<HomeScreen> {
   late String location;
   late String cond;
   late Icon weatherDisplayIcon;
+  late bool isday;
+  late AssetImage backgroundimage;
 
   void updateDisplayInfo(WeatherData weatherData) {
     setState(() {
@@ -25,6 +27,12 @@ class _HomeScreenState extends State<HomeScreen> {
       ftemperature = weatherData.currentFTemperature.round();
       location = weatherData.location;
       cond = weatherData.cond;
+      isday = weatherData.isday;
+      if (isday) {
+        backgroundimage = AssetImage("assets/day.jpg");
+      } else {
+        backgroundimage = AssetImage("assets/night.jpg");
+      }
       humidity = weatherData.humidity;
       WeatherDisplayData weatherDisplayData =
           weatherData.getWeatherDisplayData();
@@ -42,13 +50,19 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Colors.black,
         centerTitle: true,
-        leading: Icon(Icons.cached),
-        backgroundColor: Colors.transparent,
+        leading: IconButton(
+          onPressed: () => Navigator.pushNamed(context, '/'),
+          icon: Icon(
+            Icons.cached,
+            color: Colors.white,
+          ),
+        ),
         title: Text('Weather'),
         actions: [
           IconButton(
-            onPressed: null,
+            onPressed: () => Navigator.pushNamed(context, '/search'),
             icon: Icon(
               Icons.search,
               color: Colors.white,
@@ -57,6 +71,12 @@ class _HomeScreenState extends State<HomeScreen> {
         ],
       ),
       body: Container(
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            image: backgroundimage,
+            fit: BoxFit.cover,
+          ),
+        ),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.stretch,

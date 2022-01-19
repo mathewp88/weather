@@ -41,8 +41,7 @@ dependencies:
   weather_icons: ^3.0.0
   string_extensions: ^0.4.0
   daylight: ^2.0.0
-
-
+  geocode: ^1.0.1
 
 
 

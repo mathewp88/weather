@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:weather/screens/loadingscreen.dart';
+import 'package:weather/screens/searchscreen.dart';
 
 void main() {
   runApp(MyApp());
@@ -14,6 +15,7 @@ class MyApp extends StatelessWidget {
       initialRoute: '/',
       routes: {
         '/': (_) => LoadingScreen(),
+        '/search': (_) => Search(),
       },
     );
   }
