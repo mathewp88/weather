@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:uuid/uuid.dart';
+import 'package:weather/util/address_search.dart';
+import 'package:weather/util/findplace.dart';
 
 String value = "";
 
@@ -9,9 +12,15 @@ class Search extends StatefulWidget {
   _SearchState createState() => _SearchState();
 }
 
-final myController = TextEditingController();
-
 class _SearchState extends State<Search> {
+  final myController = TextEditingController();
+
+  @override
+  void dispose() {
+    myController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -23,15 +32,23 @@ class _SearchState extends State<Search> {
       ),
       body: Container(
         child: Column(
-          children: [
+          children: <Widget>[
             TextField(
-              autofocus: true,
+              controller: myController,
+              onTap: () async {
+                final sessionToken = Uuid().v4();
+                final Suggestion? result = await showSearch(
+                    context: context, delegate: AddressSearch(sessionToken));
+                if (result != null) {
+                  setState(() {
+                    myController.text = result.description;
+                  });
+                }
+              },
               decoration: InputDecoration(
-                label: Text('Find Location'),
+                hintText: 'Find Location',
                 prefixIcon: Icon(Icons.search),
               ),
-              controller: myController,
-              onSubmitted: null,
             ),
           ],
         ),

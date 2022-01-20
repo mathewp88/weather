@@ -42,6 +42,9 @@ dependencies:
   string_extensions: ^0.4.0
   daylight: ^2.0.0
   geocode: ^1.0.1
+  google_places_flutter: ^2.0.5
+  flutter_typeahead: ^3.2.4
+  uuid: ^3.0.5
 
 
 
