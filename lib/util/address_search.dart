@@ -4,7 +4,7 @@ import 'package:weather/util/findplace.dart';
 class AddressSearch extends SearchDelegate<Suggestion> {
   late final sessionToken;
   late PlaceApiProvider apiClient;
-  
+
   AddressSearch(this.sessionToken) {
     apiClient = PlaceApiProvider(sessionToken);
   }
@@ -23,7 +23,11 @@ class AddressSearch extends SearchDelegate<Suggestion> {
   @override
   Widget? buildLeading(BuildContext context) {
     // TODO: implement buildLeading
-    return IconButton(onPressed: () {}, icon: Icon(Icons.arrow_back));
+    return IconButton(
+        onPressed: () {
+          Navigator.pushNamed(context, '/search');
+        },
+        icon: Icon(Icons.arrow_back));
   }
 
   @override
@@ -37,19 +41,35 @@ class AddressSearch extends SearchDelegate<Suggestion> {
     // TODO: implement buildSuggestions
     return FutureBuilder(
       future: query == '' ? null : apiClient.fetchSuggestions(query, 'en'),
-      builder: (context, snapshot) => query == ""?
-      Container(
-        child: Text('Enter Your Adress'),
-      )
-      : snapshot.hasData ? ListView.builder(itemBuilder: (context, i) => 
-      ListTile(
-        title: Text((snapshot.data[i] as Suggestion).description),
-        onTap: (){},
-      ),
-      itemCount: snapshot.data.length,
-      )
-      :Container(
-        child: CircularProgressIndicator(),)
-      );
+      builder: (context, snapshot) => query == ""
+          ? Scaffold(
+              backgroundColor: Colors.black,
+              body: Center(
+                child: Container(
+                  child: Text(
+                    'Enter Your Adress',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 32,
+                      fontWeight: FontWeight.w300,
+                    ),
+                  ),
+                ),
+              ))
+          : snapshot.hasData
+              ? ListView.builder(
+                  itemBuilder: (context, i) => ListTile(
+                    title: Text((snapshot.data.toString()[i] as Suggestion)
+                        .description),
+                    onTap: () {},
+                  ),
+                  itemCount: snapshot.data.toString().length,
+                )
+              : Scaffold(
+                  body: Center(
+                      child: Container(child: CircularProgressIndicator())),
+                  backgroundColor: Colors.black,
+                ),
+    );
   }
 }
